@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+  <head>
+     
+    <meta charset="UTF-8">
+    <title>React 基础知识 - Katrox&#39; Blog</title>
+    <link rel="shortcut icon" href="/static/img/icon.png">
+    <link rel="icon" href="/static/img/icon.png" sizes="192x192"/>
+    
+<link rel="stylesheet" href="/static/kico.css">
+<link rel="stylesheet" href="/static/hingle.css">
+
+    
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <meta name="viewport" content="width=device-width, maximum-scale=1, initial-scale=1"/>
+    <meta property="og:site_name" content="Katrox&#39; Blog">
+    <meta property="og:title" content="React 基础知识"/>
+    
+    <style>body:before{ content: ''; background-image: url(https://api.paugram.com/wallpaper?source=gh) }</style>
+    
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+  <body>
+    <header>
+    <div class="head-title">
+        <h4>Katrox&#39; Blog</h4>
+    </div>
+    <div class="head-action">
+        <div class="toggle-btn"></div>
+        <div class="light-btn"></div>
+        <div class="search-btn"></div>
+    </div>
+    <form class="head-search" method="post">
+        <input type="text" name="s" placeholder="搜索什么？">
+    </form>
+    <nav class="head-menu">
+        <a href="/">首页</a>
+        <div class="has-child">
+            <a>分类</a>
+            <div class="sub-menu">
+                <a class="category-link" href="/categories/%E8%84%9A%E6%89%8B%E6%9E%B6%E6%90%AD%E5%BB%BA/">脚手架搭建</a>
+            </div>
+        </div>
+        
+            <a href="/about">关于我</a>
+        
+    </nav>
+</header>
+
+    <main>
+    <div class="wrap min">
+        <section class="post-title">
+            <h2>React 基础知识</h2>
+            <div class="post-meta">
+                <time class="date">2025.03.05</time>
+            
+            </div>
+        </section>
+        <article class="post-content">
+        
+            <h2 id="定义组件"><a href="#定义组件" class="headerlink" title="定义组件"></a>定义组件</h2><ul>
+<li>组件主函数用 <code>export default</code> 定义，return JSX</li>
+<li><code>export default</code> 可以跟着匿名函数</li>
+<li>JSX必须闭合标签，且不能返回多个JSX标签。至少要用空的&lt;&gt;…&lt;&#x2F;&gt;包裹</li>
+<li>样式名用 <code>className</code></li>
+<li>传递对象要用大括号表示：声明样式 <code>style=&#123;&#123; color: 'red' &#125;&#125;</code></li>
+<li>JSX中变量用 <code>&#123;&#125;</code> 包裹</li>
+<li>列表元素记得要标明 <code>key</code></li>
+</ul>
+<blockquote>
+<p>相同位置的相同组件重渲时会共享 <code>state</code></p>
+<p>永远要将组件定义在最上层并且不要把它们的定义嵌套起来<br>（<strong>否则每次重渲染子组件也会跟着重渲，这会导致其中的 <code>state</code> 丢失</strong>）</p>
+<blockquote>
+<p>可以使用 <code>key</code> 区分不同的组件</p>
+<p>调整组件的位置也可以</p>
+</blockquote>
+</blockquote>
+<h3 id="声明样式要使用驼峰命名法"><a href="#声明样式要使用驼峰命名法" class="headerlink" title="声明样式要使用驼峰命名法"></a>声明样式要使用驼峰命名法</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// HTML</span></span><br><span class="line">&lt;ul style=<span class="string">&quot;background-color: black&quot;</span>&gt;</span><br><span class="line"><span class="comment">// JSX</span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">ul</span> <span class="attr">style</span>=<span class="string">&#123;&#123;backgroundColor:</span> &#x27;<span class="attr">black</span>&#x27;&#125;&#125;&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<h3 id="组件间传递-prop"><a href="#组件间传递-prop" class="headerlink" title="组件间传递 prop"></a>组件间传递 prop</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line">&lt;&gt;</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">MyModule</span> <span class="attr">onClick</span>=<span class="string">&#123;()</span> =&gt;</span> alert(&#x27;你好&#x27;) isVisible=&#123;true&#125;&#125;&gt;</span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">span</span>&gt;</span>世界<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">MyModule</span>&gt;</span></span></span><br><span class="line">&lt;/&gt;</span><br><span class="line">...</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">function</span> <span class="title function_">MyModule</span>(<span class="params">&#123; children, onClick, isVisible &#125;</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        &#123;isVisible &amp;&amp; <span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">onClick</span>=<span class="string">&#123;onClick&#125;</span>&gt;</span>&#123;children&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span>&#125;</span><br><span class="line">    )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="设置-onClick-方法"><a href="#设置-onClick-方法" class="headerlink" title="设置 onClick 方法"></a>设置 onClick 方法</h3><p>应当传入一个 函数 而非 函数调用</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line">onClick=&#123;setCount&#125;</span><br><span class="line">onClick=&#123;<span class="function">() =&gt;</span> &#123;<span class="title function_">setCount</span>(count + <span class="number">1</span>)&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="常用的-eventHandler"><a href="#常用的-eventHandler" class="headerlink" title="常用的 eventHandler"></a>常用的 eventHandler</h3><ul>
+<li>onClick</li>
+<li>onPointerEnter</li>
+<li>onPointerLeave</li>
+</ul>
+<h2 id="useState"><a href="#useState" class="headerlink" title="useState"></a>useState</h2><p>类似于 vue 的 <code>ref</code>，更改时触发重新渲染</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 注意：这里用的是 [] 而非 &#123;&#125;</span></span><br><span class="line"><span class="keyword">const</span> [state, setState] = <span class="title function_">useState</span>(<span class="variable constant_">DEF</span>)</span><br></pre></td></tr></table></figure>
+<p>可以随时读取state，但是返回一个快照。异步情况下考虑使用ref处理</p>
+<h3 id="操作-state"><a href="#操作-state" class="headerlink" title="操作 state"></a>操作 state</h3><p>更新 state 中的数组</p>
+<table>
+<thead>
+<tr>
+<th>元素操作</th>
+<th>推荐使用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>添加</td>
+<td><code>[...arr]</code></td>
+</tr>
+<tr>
+<td>删除</td>
+<td><code>filter</code>, <code>slice</code></td>
+</tr>
+<tr>
+<td>替换</td>
+<td><code>map</code></td>
+</tr>
+</tbody></table>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 删除</span></span><br><span class="line"><span class="title function_">setTasks</span>(</span><br><span class="line">    tasks.<span class="title function_">filter</span>(<span class="function"><span class="params">t</span> =&gt;</span> t.<span class="property">id</span> !== task.<span class="property">id</span>)</span><br><span class="line">)</span><br><span class="line"><span class="comment">// 替换</span></span><br><span class="line"><span class="title function_">setShapes</span>(shapes.<span class="title function_">map</span>(<span class="function"><span class="params">shape</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (shape.<span class="property">type</span> === <span class="string">&#x27;square&#x27;</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> shape</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            ...shape,</span><br><span class="line">            <span class="attr">y</span>: shape.<span class="property">y</span> + <span class="number">50</span>,</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;))</span><br><span class="line"><span class="comment">// 插入</span></span><br><span class="line"><span class="title function_">setArtists</span>([</span><br><span class="line">    <span class="comment">// 插入点之前的元素</span></span><br><span class="line">    ...artists.<span class="title function_">slice</span>(<span class="number">0</span>, insertAt),</span><br><span class="line">    <span class="comment">// 新的元素</span></span><br><span class="line">    &#123; <span class="attr">id</span>: nextId++, <span class="attr">name</span>: name &#125;,</span><br><span class="line">    <span class="comment">// 插入点之后的元素</span></span><br><span class="line">    ...artists.<span class="title function_">slice</span>(insertAt),</span><br><span class="line">])</span><br></pre></td></tr></table></figure>
+
+<h3 id="state-异步问题"><a href="#state-异步问题" class="headerlink" title="state 异步问题"></a>state 异步问题</h3><p>state 更新是排队进行的，所以 set 后<strong>不会立即更新DOM</strong></p>
+<p>可以将 state 更新包裹到 <code>flushSync</code> 调用中：</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; flushSync &#125; <span class="keyword">from</span> <span class="string">&#x27;react-dom&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="title function_">flushSync</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="title function_">setCount</span>(count + <span class="number">1</span>)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// 相当于 await，等待同步更新 DOM</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<h2 id="useRef"><a href="#useRef" class="headerlink" title="useRef"></a>useRef</h2><p>更改时不会触发重新渲染，一般用来保存DOM元素</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> inputRef = <span class="title function_">useRef</span>(<span class="literal">null</span>)</span><br><span class="line"><span class="comment">// 修改立刻生效</span></span><br><span class="line">inputRef.<span class="property">current</span> = ...</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>不要在渲染期间读写一个current（结果不可预测</p>
+</blockquote>
+<h3 id="无法使用-ref-访问另一个组件的DOM节点"><a href="#无法使用-ref-访问另一个组件的DOM节点" class="headerlink" title="无法使用 ref 访问另一个组件的DOM节点"></a>无法使用 ref 访问另一个组件的DOM节点</h3><p>子组件使用 <code>forwardRef</code> 方法定义方可：</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title class_">MyInput</span> = <span class="title function_">forwardRef</span>(<span class="function">(<span class="params">props, ref</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        <span class="comment">// 暴露原始的 DOM 元素 input</span></span><br><span class="line">        <span class="language-xml"><span class="tag">&lt;<span class="name">input</span> &#123; <span class="attr">...props</span> &#125; <span class="attr">ref</span>=<span class="string">&#123;</span> <span class="attr">ref</span> &#125; /&gt;</span></span></span><br><span class="line">    )</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// 定义主组件</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="title class_">MyInput</span> = <span class="title function_">forwardRef</span>(...)</span><br></pre></td></tr></table></figure>
+
+<h4 id="使用命令句柄限制暴露的API部分"><a href="#使用命令句柄限制暴露的API部分" class="headerlink" title="使用命令句柄限制暴露的API部分"></a>使用命令句柄限制暴露的API部分</h4><figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title class_">MyInput</span> = <span class="title function_">forwardRef</span>(<span class="function">(<span class="params">props, ref</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> realInputRef = <span class="title function_">useRef</span>(<span class="literal">null</span>)</span><br><span class="line">    <span class="comment">// 注意结构是 () =&gt; (&#123;&#125;)</span></span><br><span class="line">    <span class="title function_">useImperativeHandle</span>(ref, <span class="function">() =&gt;</span> (&#123;</span><br><span class="line">        <span class="title function_">focus</span>(<span class="params"></span>) &#123;</span><br><span class="line">            realInputRef.<span class="property">current</span>.<span class="title function_">focus</span>()</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;))</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        <span class="comment">// 暴露原始的 DOM 元素 input</span></span><br><span class="line">        <span class="language-xml"><span class="tag">&lt;<span class="name">input</span> &#123; <span class="attr">...props</span> &#125; <span class="attr">ref</span>=<span class="string">&#123;</span> <span class="attr">realInputRef</span> &#125; /&gt;</span></span></span><br><span class="line">    )</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>在这种情况下，ref “句柄”不是 DOM 节点，<br>而是你在 <code>useImperativeHandle</code> 调用中创建的自定义对象。</p>
+<h2 id="可能会用到的-DOM-元素函数"><a href="#可能会用到的-DOM-元素函数" class="headerlink" title="可能会用到的 DOM 元素函数"></a>可能会用到的 DOM 元素函数</h2><table>
+<thead>
+<tr>
+<th>函数名</th>
+<th align="center">参数</th>
+<th align="center">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>focus</td>
+<td align="center"></td>
+<td align="center">聚焦元素</td>
+</tr>
+<tr>
+<td>remove</td>
+<td align="center"></td>
+<td align="center">移除元素</td>
+</tr>
+<tr>
+<td>play</td>
+<td align="center"></td>
+<td align="center">播放</td>
+</tr>
+<tr>
+<td>pause</td>
+<td align="center"></td>
+<td align="center">暂停</td>
+</tr>
+<tr>
+<td>scrollIntoView</td>
+<td align="center">{ behavior: ‘smooth’, block: ‘nearest’, inline: ‘center’ }</td>
+<td align="center">滚动元素到视野中心</td>
+</tr>
+</tbody></table>
+<h2 id="useEffect-钩子"><a href="#useEffect-钩子" class="headerlink" title="useEffect 钩子"></a>useEffect 钩子</h2><p>类似于 vue 的 updated 钩子</p>
+<blockquote>
+<p>当相关 DOM 渲染好后再调用其中的函数。<strong>应当注意好性能，避免无意义的首次渲染</strong></p>
+</blockquote>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> ref = <span class="title function_">useRef</span>(<span class="literal">null</span>)</span><br><span class="line"></span><br><span class="line"><span class="title function_">useEffect</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (isPlaying) &#123;</span><br><span class="line">        ref.<span class="property">current</span>?.<span class="title function_">play</span>()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>Effect 会在 每次 渲染后执行。因此如果在其中更新 state（触发重新渲染）会陷入死循环</p>
+</blockquote>
+<h3 id="选择性执行-Effect"><a href="#选择性执行-Effect" class="headerlink" title="选择性执行 Effect"></a>选择性执行 Effect</h3><p>依赖数组可以包含多个依赖项。<br>若依赖项之一改变了才会执行 Effect</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="title function_">useEffect</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;, [isPlaying])</span><br><span class="line"><span class="comment">// 只有isPlaying值改变了才会执行</span></span><br></pre></td></tr></table></figure>
+<p>依赖数组也可以为空</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="title function_">useEffect</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;, [])</span><br><span class="line"><span class="comment">// 只会在组件挂载后执行，类似于 vue 的 onMounted</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>dev环境下会挂载再卸载再挂载，也就是挂载两次<br>关闭 <code>严格模式</code> 关闭开发环境特有的行为</p>
+</blockquote>
+<h3 id="定义-清理（cleanup）函数"><a href="#定义-清理（cleanup）函数" class="headerlink" title="定义 清理（cleanup）函数"></a>定义 清理（cleanup）函数</h3><figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="title function_">useEffect</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> conn = <span class="title function_">createConnection</span>()</span><br><span class="line">    conn.<span class="title function_">connect</span>()</span><br><span class="line">    <span class="comment">// 每次重新执行 Effect 之前，都会先调用清理函数</span></span><br><span class="line">    <span class="comment">// 组件卸载时同样也会调用</span></span><br><span class="line">    <span class="keyword">return</span> <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        conn.<span class="title function_">disconnect</span>()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;, [])</span><br></pre></td></tr></table></figure>
+
+<h2 id="useMemo-钩子"><a href="#useMemo-钩子" class="headerlink" title="useMemo 钩子"></a>useMemo 钩子</h2><p>类似于 vue 的 <code>computed</code> 钩子，用来缓存计算结果</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> visibleTodos = <span class="title function_">useMemo</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">getFilteredTodos</span>(todos, filter)</span><br><span class="line">&#125;, [todos, filter])</span><br></pre></td></tr></table></figure>
+<p>其中的函数渲染期间执行，当依赖改变时才会重新计算</p>
+<h2 id="useReducer-钩子"><a href="#useReducer-钩子" class="headerlink" title="useReducer 钩子"></a>useReducer 钩子</h2><p>当状态逻辑过多时，考虑将其迁移至 <code>Reducer</code> 中</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> [tasks, dispatch] = <span class="title function_">useReducer</span>(tasksReducer, initTasks)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">handleAddTask</span>(<span class="params">text</span>) &#123;</span><br><span class="line">        <span class="title function_">dispatch</span>(&#123;</span><br><span class="line">            <span class="attr">type</span>: <span class="string">&#x27;added&#x27;</span>,</span><br><span class="line">            <span class="attr">id</span>: nextId++,</span><br><span class="line">            <span class="attr">text</span>: text,</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">tasksReducer</span>(<span class="params">tasks, action</span>) &#123;</span><br><span class="line">    <span class="keyword">switch</span> (action.<span class="property">type</span>) &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&#x27;added&#x27;</span>: &#123;</span><br><span class="line">            <span class="keyword">return</span> [</span><br><span class="line">                ...tasks,</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="attr">id</span>: action.<span class="property">id</span>,</span><br><span class="line">                    <span class="attr">text</span>: action.<span class="property">text</span>,</span><br><span class="line">                &#125;</span><br><span class="line">            ]</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="attr">default</span>: &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="title class_">Error</span>(<span class="string">&#x27;未知 action: &#x27;</span> + action.<span class="property">type</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="useContext-钩子"><a href="#useContext-钩子" class="headerlink" title="useContext 钩子"></a>useContext 钩子</h2><figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 在某一外部文件中定义 context</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="title class_">XXXContext</span> = <span class="title function_">createContext</span>(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 组件中导入</span></span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">XXXContext</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;...&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">function</span> <span class="title function_">Module</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> xxx = <span class="title function_">useContext</span>(<span class="title class_">XXXContext</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">span</span>&gt;</span>&#123;xxx&#125;<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<p>用 <code>context provider</code> 包裹组件以提供 <code>xxxContext</code> 给它们</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">XXXContext</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;...&#x27;</span></span><br><span class="line"></span><br><span class="line">&lt;<span class="title class_">XXXContext</span>.<span class="property">Provider</span> value=&#123;xxx&#125;&gt;</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">Module</span> /&gt;</span></span></span><br><span class="line">&lt;/<span class="title class_">XXXContext</span>.<span class="property">Provider</span>&gt;</span><br></pre></td></tr></table></figure>
+<p>组件会使用UI树中在它上层最近的那个 <code>&lt;XXXContext.Provider&gt;</code> 传递过来的值</p>
+<p>替代方案：<br><br>抽象组件并将 JSX 作为 <code>children</code> 传递给它们</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&lt;<span class="title class_">Layout</span> posts=&#123;posts&#125; /&gt;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">Layout</span>&gt;</span><span class="tag">&lt;<span class="name">Posts</span> <span class="attr">posts</span>=<span class="string">&#123;posts&#125;</span> /&gt;</span><span class="tag">&lt;/<span class="name">Layout</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<h3 id="组合-createContext-与-useReducer-钩子"><a href="#组合-createContext-与-useReducer-钩子" class="headerlink" title="组合 createContext 与 useReducer 钩子"></a>组合 <code>createContext</code> 与 <code>useReducer</code> 钩子</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; createContext, useContext, useReducer &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"><span class="comment">// 区分 createContext 与 useContext</span></span><br><span class="line"><span class="keyword">const</span> <span class="title class_">TasksContext</span> = <span class="title function_">createContext</span>(<span class="literal">null</span>)</span><br><span class="line"><span class="keyword">const</span> <span class="title class_">TasksDispatchContext</span> = <span class="title function_">createContext</span>(<span class="literal">null</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">TasksProvider</span>(<span class="params">&#123; children &#125;</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> [tasks, tasksDispatch] = <span class="title function_">useReducer</span>(reducer, initTaks)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        <span class="language-xml"><span class="tag">&lt;<span class="name">TasksContext.Provider</span> <span class="attr">value</span>=<span class="string">&#123;tasks&#125;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;<span class="name">TasksDispatchContext.Provider</span> <span class="attr">value</span>=<span class="string">&#123;tasksDispatch&#125;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">                &#123; children &#125;</span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;/<span class="name">TasksDispatchContext.Provider</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;/<span class="name">TasksContext.Provider</span>&gt;</span></span></span><br><span class="line">    )</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">useTasks</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">useContext</span>(<span class="title class_">TasksContext</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">useTasksDispatch</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">useContext</span>(<span class="title class_">TasksDispatchContext</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> initTasks = [</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attr">id</span>: <span class="number">1</span>,</span><br><span class="line">        <span class="attr">name</span>: <span class="string">&#x27;task a&#x27;</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    ...</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>当你想使用时：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">TaskProvider</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./TaskProvider.js&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">function</span> <span class="title function_">TaskApp</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        <span class="language-xml"><span class="tag">&lt;<span class="name">TaskProvider</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;<span class="name">AddTask</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;<span class="name">TaskList</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;/<span class="name">TaskProvider</span>&gt;</span></span></span><br><span class="line">    )</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">AddTask</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> tasks = <span class="title function_">useTasks</span>()</span><br><span class="line">    <span class="keyword">const</span> tasksDispatch = <span class="title function_">useTasksDispatch</span>()</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+        </article>
+        <section class="post-near">
+            <ul>
+                
+                    <li>上一篇: <a href="/2025/03/05/Vue%20%E8%BF%9B%E9%98%B6%E7%9F%A5%E8%AF%86%E7%82%B9/">Vue 进阶知识点</a></li>
+                
+                
+                    <li>下一篇: <a href="/2025/03/05/%E5%B8%B8%E8%A7%81%E7%9A%84%E4%B8%89%E5%A4%A7%E8%AF%B7%E6%B1%82API/">常见的三大请求API</a></li>
+                
+            </ul>
+        </section>
+        
+            <section class="post-tags">
+            <a class="-none-link" href="/tags/react/" rel="tag">react</a>
+            </section>
+        
+    
+        <section class="post-author">
+        
+            <figure class="author-avatar">
+                <img src="https://avatars.githubusercontent.com/u/147379182?v=4" alt="Katrox" />
+            </figure>
+        
+            <div class="author-info">
+                <h4>Katrox</h4>
+                <p>Exception in thread "main" java.lang.NullPointerException</p>
+            </div>
+        </section>
+    
+    </div>
+</main>
+
+    <footer>
+    <div class="buttons">
+        <a class="to-top" href="#"></a>
+    </div>
+    <div class="wrap min">
+        <section class="widget">
+            <div class="row">
+                <div class="col-m-4">
+                    <h3 class="title-recent">最新文章：</h3>
+                    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2025/03/05/Vue%20%E8%BF%9B%E9%98%B6%E7%9F%A5%E8%AF%86%E7%82%B9/">Vue 进阶知识点</a></li><li class="post-list-item"><a class="post-list-link" href="/2025/03/05/React%20%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">React 基础知识</a></li><li class="post-list-item"><a class="post-list-link" href="/2025/03/05/%E5%B8%B8%E8%A7%81%E7%9A%84%E4%B8%89%E5%A4%A7%E8%AF%B7%E6%B1%82API/">常见的三大请求API</a></li><li class="post-list-item"><a class="post-list-link" href="/2024/07/16/React%20+%20Electron%20%E9%85%8D%E7%BD%AE%E6%95%99%E5%AD%A6/">React + Electron 环境配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2024/07/12/React%20%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/">React 项目搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2024/06/28/Vue%20%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/">Vue 项目搭建</a></li></ul>
+                </div>
+                <div class="col-m-4">
+                    <h3 class="title-date">时光机：</h3>
+                    <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/03/">March 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/07/">July 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/06/">June 2024</a></li></ul>
+                </div>
+                <div class="col-m-4">
+                    <h3 class="title-tags">标签云：</h3>
+                    <a href="/tags/electron/" style="font-size: 10px;">electron</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/react/" style="font-size: 20px;">react</a> <a href="/tags/vue/" style="font-size: 15px;">vue</a>
+                </div>
+            </div>
+        </section>
+        <section class="sub-footer">
+            <p>© 2025 <a href="/">Katrox&#39; Blog</a>. All Rights Reserved. Theme By <a href="https://github.com/Dreamer-Paul/Hingle" target="_blank" rel="nofollow">Hingle</a>.</p>
+        </section>
+    </div>
+</footer>
+
+
+<script src="/static/kico.js"></script>
+<script src="/static/hingle.js"></script>
+
+
+<script>var hingle = new Paul_Hingle({"copyright":true,"night":true});</script>
+
+  </body>
+</html>

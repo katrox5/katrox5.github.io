@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+  <head>
+     
+    <meta charset="UTF-8">
+    <title>Vue 进阶知识点 - Katrox&#39; Blog</title>
+    <link rel="shortcut icon" href="/static/img/icon.png">
+    <link rel="icon" href="/static/img/icon.png" sizes="192x192"/>
+    
+<link rel="stylesheet" href="/static/kico.css">
+<link rel="stylesheet" href="/static/hingle.css">
+
+    
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <meta name="viewport" content="width=device-width, maximum-scale=1, initial-scale=1"/>
+    <meta property="og:site_name" content="Katrox&#39; Blog">
+    <meta property="og:title" content="Vue 进阶知识点"/>
+    
+    <style>body:before{ content: ''; background-image: url(https://api.paugram.com/wallpaper?source=gh) }</style>
+    
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+  <body>
+    <header>
+    <div class="head-title">
+        <h4>Katrox&#39; Blog</h4>
+    </div>
+    <div class="head-action">
+        <div class="toggle-btn"></div>
+        <div class="light-btn"></div>
+        <div class="search-btn"></div>
+    </div>
+    <form class="head-search" method="post">
+        <input type="text" name="s" placeholder="搜索什么？">
+    </form>
+    <nav class="head-menu">
+        <a href="/">首页</a>
+        <div class="has-child">
+            <a>分类</a>
+            <div class="sub-menu">
+                <a class="category-link" href="/categories/%E8%84%9A%E6%89%8B%E6%9E%B6%E6%90%AD%E5%BB%BA/">脚手架搭建</a>
+            </div>
+        </div>
+        
+            <a href="/about">关于我</a>
+        
+    </nav>
+</header>
+
+    <main>
+    <div class="wrap min">
+        <section class="post-title">
+            <h2>Vue 进阶知识点</h2>
+            <div class="post-meta">
+                <time class="date">2025.03.05</time>
+            
+            </div>
+        </section>
+        <article class="post-content">
+        
+            <h2 id="透传-Attribute"><a href="#透传-Attribute" class="headerlink" title="透传 Attribute"></a>透传 Attribute</h2><figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="title function_">defineOptions</span>(&#123;</span><br><span class="line">    <span class="attr">inheritAttrs</span>: <span class="literal">false</span></span><br><span class="line">&#125;) # 禁用透传</span><br></pre></td></tr></table></figure>
+<ul>
+<li>在 js 中使用 <code>useAttrs()</code> 获取透传进来attribute</li>
+<li>在模板中使用 <code>$attrs</code> 访问：<code>@click v-on</code>  -&gt; <code>$attrs.onClick</code></li>
+</ul>
+<h2 id="props"><a href="#props" class="headerlink" title="props"></a>props</h2><figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// js</span></span><br><span class="line"><span class="keyword">const</span> props = <span class="title function_">defineProps</span>(&#123;</span><br><span class="line">  <span class="attr">foo</span>: &#123; <span class="attr">type</span>: <span class="title class_">String</span>, <span class="attr">required</span>: <span class="literal">true</span> &#125;,</span><br><span class="line">  <span class="attr">bar</span>: <span class="title class_">Number</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// ts</span></span><br><span class="line"><span class="keyword">const</span> props = defineProps&lt;&#123;</span><br><span class="line">  <span class="attr">foo</span>: <span class="built_in">string</span></span><br><span class="line">  bar?: <span class="built_in">number</span></span><br><span class="line">&#125;&gt;()</span><br></pre></td></tr></table></figure>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 解构默认值</span></span><br><span class="line"><span class="keyword">const</span> props = <span class="title function_">withDefaults</span>(defineProps&lt;<span class="title class_">Props</span>&gt;(), &#123;</span><br><span class="line">  <span class="attr">msg</span>: <span class="string">&#x27;hello&#x27;</span>,</span><br><span class="line">  <span class="attr">labels</span>: <span class="function">() =&gt;</span> [<span class="string">&#x27;one&#x27;</span>, <span class="string">&#x27;two&#x27;</span>]</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="为组件-emits-标注类型"><a href="#为组件-emits-标注类型" class="headerlink" title="为组件 emits 标注类型"></a>为组件 <code>emits</code> 标注类型</h2><figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 运行时</span></span><br><span class="line"><span class="keyword">const</span> emit = <span class="title function_">defineEmits</span>([<span class="string">&#x27;change&#x27;</span>, <span class="string">&#x27;update&#x27;</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment">// 基于选项</span></span><br><span class="line"><span class="keyword">const</span> emit = <span class="title function_">defineEmits</span>(&#123;</span><br><span class="line">  <span class="attr">change</span>: <span class="function">(<span class="params"><span class="attr">id</span>: <span class="built_in">number</span></span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 返回 `true` 或 `false`</span></span><br><span class="line">    <span class="comment">// 表明验证通过或失败</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">update</span>: <span class="function">(<span class="params"><span class="attr">value</span>: <span class="built_in">string</span></span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 返回 `true` 或 `false`</span></span><br><span class="line">    <span class="comment">// 表明验证通过或失败</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>推荐使用：</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 基于类型</span></span><br><span class="line"><span class="keyword">const</span> emit = defineEmits&lt;&#123;</span><br><span class="line">  (<span class="attr">e</span>: <span class="string">&#x27;change&#x27;</span>, <span class="attr">id</span>: <span class="built_in">number</span>): <span class="title function_">void</span></span><br><span class="line">  (<span class="attr">e</span>: <span class="string">&#x27;update&#x27;</span>, <span class="attr">value</span>: <span class="built_in">string</span>): <span class="built_in">void</span></span><br><span class="line">&#125;&gt;()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 3.3+: 可选的、更简洁的语法</span></span><br><span class="line"><span class="keyword">const</span> emit = defineEmits&lt;&#123;</span><br><span class="line">  <span class="attr">change</span>: [<span class="attr">id</span>: <span class="built_in">number</span>]</span><br><span class="line">  <span class="attr">update</span>: [<span class="attr">value</span>: <span class="built_in">string</span>]</span><br><span class="line">&#125;&gt;()</span><br></pre></td></tr></table></figure>
+
+<h2 id="声明引用类型"><a href="#声明引用类型" class="headerlink" title="声明引用类型"></a>声明引用类型</h2><figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">MyModal</span> <span class="keyword">from</span> <span class="string">&#x27;./MyModal.vue&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> modal = ref&lt;<span class="title class_">InstanceType</span>&lt;<span class="keyword">typeof</span> <span class="title class_">MyModal</span>&gt; | <span class="literal">null</span>&gt;(<span class="literal">null</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">openModal</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  modal.<span class="property">value</span>?.<span class="title function_">open</span>()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="为了避免-props-逐级透传问题-依赖注入"><a href="#为了避免-props-逐级透传问题-依赖注入" class="headerlink" title="为了避免 props 逐级透传问题 -&gt; 依赖注入"></a>为了避免 <code>props</code> 逐级透传问题 -&gt; 依赖注入</h2><h3 id="provide（提供）"><a href="#provide（提供）" class="headerlink" title="provide（提供）"></a>provide（提供）</h3><figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; provide &#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="title function_">provide</span>(<span class="comment">/* 注入名 */</span> <span class="string">&#x27;message&#x27;</span>, <span class="comment">/* 值 */</span> <span class="string">&#x27;hello!&#x27;</span>)</span><br><span class="line"><span class="comment">// 注入名可以是字符串或者Symbol，值任意（包括ref）</span></span><br></pre></td></tr></table></figure>
+<p>父组件提供，子组件内可以注入。<br><br>或者可以选择在应用层提供，所有组件内皆可使用：</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line">app.<span class="title function_">provide</span>(<span class="string">&#x27;appProvided&#x27;</span>, value)</span><br></pre></td></tr></table></figure>
+<h3 id="inject（注入）"><a href="#inject（注入）" class="headerlink" title="inject（注入）"></a>inject（注入）</h3><figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; inject &#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> message = <span class="title function_">inject</span>(<span class="string">&#x27;message&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> message = <span class="title function_">inject</span>(<span class="string">&#x27;message&#x27;</span>, <span class="string">&#x27;默认值&#x27;</span>)</span><br><span class="line"><span class="comment">// 获取失败时，使用默认值</span></span><br><span class="line"><span class="keyword">const</span> message = <span class="title function_">inject</span>(<span class="string">&#x27;key&#x27;</span>, <span class="function">() =&gt;</span> <span class="keyword">new</span> <span class="title class_">ExpensiveClass</span>(), <span class="literal">true</span>)</span><br><span class="line"><span class="comment">// 当获取失败时才会调用函数或初始化类，减小开销。</span></span><br><span class="line"><span class="comment">// true表示默认值应该被当作一个工厂函数</span></span><br></pre></td></tr></table></figure>
+<h2 id="异步组件"><a href="#异步组件" class="headerlink" title="异步组件"></a>异步组件</h2><figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line">&lt;script setup&gt;</span><br><span class="line"><span class="keyword">import</span> &#123; defineAsyncComponent &#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title class_">AdminPage</span> = <span class="title function_">defineAsyncComponent</span>(<span class="function">() =&gt;</span></span><br><span class="line">    <span class="keyword">import</span>(<span class="string">&#x27;./components/AdminPageComponent.vue&#x27;</span>)</span><br><span class="line">)</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">AdminPage</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title class_">AsyncComp</span> = <span class="title function_">defineAsyncComponent</span>(&#123;</span><br><span class="line">  <span class="comment">// 加载函数</span></span><br><span class="line">  <span class="attr">loader</span>: <span class="function">() =&gt;</span> <span class="keyword">import</span>(<span class="string">&#x27;./Foo.vue&#x27;</span>),</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 加载异步组件时使用的组件</span></span><br><span class="line">  <span class="attr">loadingComponent</span>: <span class="title class_">LoadingComponent</span>,</span><br><span class="line">  <span class="comment">// 展示加载组件前的延迟时间，默认为 200ms</span></span><br><span class="line">  <span class="attr">delay</span>: <span class="number">200</span>,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 加载失败后展示的组件</span></span><br><span class="line">  <span class="attr">errorComponent</span>: <span class="title class_">ErrorComponent</span>,</span><br><span class="line">  <span class="comment">// 如果提供了一个 timeout 时间限制，并超时了</span></span><br><span class="line">  <span class="comment">// 也会显示这里配置的报错组件，默认值是：Infinity</span></span><br><span class="line">  <span class="attr">timeout</span>: <span class="number">3000</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h2 id="transition组件"><a href="#transition组件" class="headerlink" title="transition组件"></a>transition组件</h2><p>若不使用 name&#x3D;”…”，则使用全局设置</p>
+<p>定义css用 <code>v-enter-active</code> …</p>
+<h2 id="watch-的-flush-选项"><a href="#watch-的-flush-选项" class="headerlink" title="watch 的 flush 选项"></a>watch 的 flush 选项</h2><ul>
+<li><code>pre</code>: 默认值</li>
+<li><code>post</code>: 侦察回调中访问 Vue 更新之后的所属组件的 DOM</li>
+<li><code>sync</code>: 同步触发侦听器，不会进行批处理<br>别名：<code>watchPostEffect</code>、<code>watchSyncEffect</code></li>
+</ul>
+<h2 id="一些指令"><a href="#一些指令" class="headerlink" title="一些指令"></a>一些指令</h2><ul>
+<li><code>v-once</code>: 仅渲染元素和组件一次，跳过后续更新</li>
+<li><code>v-memo</code>: 传入一依赖数组，若每一项均没改变，跳过此次更新</li>
+<li><code>v-cloak</code></li>
+<li><code>v-pre</code></li>
+</ul>
+<h3 id="小知识"><a href="#小知识" class="headerlink" title="小知识"></a>小知识</h3><ul>
+<li>支持解构 <code>v-for=&quot;&#123;value&#125; in items&quot;</code></li>
+<li>遍历对象 <code>v-for=&quot;(value, key, index) in obj&quot;</code></li>
+<li><code>v-for</code> 遍历使用 <code>of</code> 同 <code>in</code></li>
+<li>如果需要频繁切换，则使用 v-show 较好；如果在运行时绑定条件很少改变，则 v-if 会更合适。</li>
+</ul>
+<h2 id="动态组件"><a href="#动态组件" class="headerlink" title="动态组件"></a>动态组件</h2><p><code>&lt;component :is=&quot;activeComponent&quot; /&gt;</code></p>
+<blockquote>
+<p>用 <code>&lt;keep-alive&gt;</code> 包裹可以保留它们的状态，方便切回</p>
+</blockquote>
+<h1 id="状态管理-pinia"><a href="#状态管理-pinia" class="headerlink" title="状态管理 pinia"></a>状态管理 pinia</h1><h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>入口处 (<code>main.ts</code>) 新增：</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; createPinia &#125; <span class="keyword">from</span> <span class="string">&#x27;pinia&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="title function_">createApp</span>(<span class="title class_">App</span>).<span class="title function_">use</span>(<span class="title function_">createPinia</span>()).<span class="title function_">mount</span>(<span class="string">&#x27;#app&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><ul>
+<li>Option Store</li>
+<li>Setup Store：<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; defineStore &#125; <span class="keyword">from</span> <span class="string">&#x27;pinia&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 命名 useXxxStore，第一个参数传入唯一ID</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> useCounterStore = <span class="title function_">defineStore</span>(<span class="string">&#x27;counter&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> count = <span class="title function_">ref</span>(<span class="number">0</span>)  <span class="comment">// state</span></span><br><span class="line">  <span class="keyword">const</span> doubleCount = <span class="title function_">computed</span>(<span class="function">() =&gt;</span> <span class="number">2</span> * count.<span class="property">value</span>)  <span class="comment">// getters</span></span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">increment</span>(<span class="params"></span>) &#123;  <span class="comment">// actions</span></span><br><span class="line">    count.<span class="property">value</span>++</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> &#123;  <span class="comment">// 必须返回 state 中所有属性</span></span><br><span class="line">    count,</span><br><span class="line">    doubleCount,</span><br><span class="line">    increment,</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>应用层提供的属性可以在 store 中使用 <code>inject()</code> 访问</p>
+<h3 id="从-Store-解构"><a href="#从-Store-解构" class="headerlink" title="从 Store 解构"></a>从 Store 解构</h3><figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; storeToRefs &#125; <span class="keyword">from</span> <span class="string">&#x27;pinia&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> store = <span class="title function_">useCounterStore</span>()</span><br><span class="line"><span class="keyword">const</span> &#123; count, doubleCount &#125; = <span class="title function_">storeToRefs</span>(store)</span><br><span class="line"><span class="comment">// 作为 action 的 increment 可以直接解构</span></span><br><span class="line"><span class="keyword">const</span> &#123; increment &#125; = store</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="路由管理-Vue-Router"><a href="#路由管理-Vue-Router" class="headerlink" title="路由管理 Vue Router"></a>路由管理 Vue Router</h1><h2 id="使用-1"><a href="#使用-1" class="headerlink" title="使用"></a>使用</h2><p>创建路由器实例：</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> router = <span class="title function_">createRouter</span>(&#123;</span><br><span class="line">  <span class="attr">history</span>: <span class="title function_">createWebHistory</span>(<span class="keyword">import</span>.<span class="property">meta</span>.<span class="property">env</span>.<span class="property">BASE_URL</span>),</span><br><span class="line">  <span class="attr">routes</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">path</span>: <span class="string">&#x27;/&#x27;</span>,</span><br><span class="line">      <span class="attr">name</span>: <span class="string">&#x27;home&#x27;</span>,</span><br><span class="line">      <span class="comment">// HomeView  将被渲染到 App 的 &lt;router-view&gt; 内部</span></span><br><span class="line">      <span class="attr">component</span>: <span class="title class_">HomeView</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">path</span>: <span class="string">&#x27;/about&#x27;</span>,</span><br><span class="line">      <span class="attr">name</span>: <span class="string">&#x27;about&#x27;</span>,</span><br><span class="line">      <span class="attr">component</span>: <span class="function">() =&gt;</span> <span class="keyword">import</span>(<span class="string">&#x27;../views/AboutView.vue&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> router</span><br><span class="line"><span class="comment">// hash模式: createWebHashHistory()</span></span><br></pre></td></tr></table></figure>
+
+<p>入口处 (<code>main.ts</code>) 新增：</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">App</span> <span class="keyword">from</span> <span class="string">&#x27;./App.vue&#x27;</span></span><br><span class="line"><span class="keyword">import</span> router <span class="keyword">from</span> <span class="string">&#x27;./router&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="title function_">createApp</span>(<span class="title class_">App</span>).<span class="title function_">use</span>(router).<span class="title function_">mount</span>(<span class="string">&#x27;#app&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>两个新组件</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&lt;router-link :to=<span class="string">&quot;&#123; path: &#x27;/user&#x27; &#125;&quot;</span></span><br><span class="line">  <span class="title class_">User</span> profile</span><br><span class="line">&lt;/router-link&gt;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">router-view</span> /&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<h3 id="动态路由匹配"><a href="#动态路由匹配" class="headerlink" title="动态路由匹配"></a>动态路由匹配</h3><figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> routes = [</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">path</span>: <span class="string">&#x27;/user/:id&#x27;</span>,</span><br><span class="line">    <span class="attr">component</span>: <span class="title class_">User</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="comment">&lt;!-- 当前路由可以通过 $route 在模板中访问 --&gt;</span></span></span><br><span class="line"><span class="language-xml">    User &#123;&#123; $route.params.id &#125;&#125;</span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+<p>可以在同一个路由设置多个 路径参数，它们会映射到 <code>$route.params</code> 上的相应字段</p>
+<table>
+<thead>
+<tr>
+<th>匹配模式</th>
+<th>匹配路径</th>
+<th>route.params</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&#x2F;users&#x2F;:username</td>
+<td>&#x2F;users&#x2F;eduardo</td>
+<td><code>&#123; username: &#39;eduardo&#39; &#125;</code></td>
+</tr>
+<tr>
+<td>&#x2F;users&#x2F;:username&#x2F;posts&#x2F;:postId</td>
+<td>&#x2F;user&#x2F;eduardo&#x2F;posts&#x2F;123</td>
+<td><code>&#123; username: &#39;eduardo&#39;, postId: &#39;123&#39; &#125;</code></td>
+</tr>
+</tbody></table>
+<h3 id="响应路由参数的变化"><a href="#响应路由参数的变化" class="headerlink" title="响应路由参数的变化"></a>响应路由参数的变化</h3><p>当用户从 <code>/users/johnny</code> 导航到 <code>/users/jolyne</code> 时，<strong>相同的组件实例会被复用</strong>。这也意味着组件的生命周期钩子不会被调用</p>
+<p>要对同一个组件中的参数变化做出相应，可以 watch <code>$route</code> 对象上的任意属性：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> route = <span class="title function_">useRoute</span>()</span><br><span class="line"></span><br><span class="line"><span class="title function_">watch</span>(<span class="function">() =&gt;</span> route.<span class="property">params</span>.<span class="property">id</span>, <span class="function">(<span class="params">newId, oldId</span>) =&gt;</span> &#123;</span><br><span class="line">  ...</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>或者使用 <code>beforeRouteUpdate</code> 导航守卫</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="title function_">onBeforeRouteUpdate</span>(<span class="function">(<span class="params">to, <span class="keyword">from</span></span>) =&gt;</span> &#123;</span><br><span class="line"></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="嵌套路由"><a href="#嵌套路由" class="headerlink" title="嵌套路由"></a>嵌套路由</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> routes = [</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">path</span>: <span class="string">&#x27;/user/:id&#x27;</span>,</span><br><span class="line">    <span class="attr">component</span>: <span class="title class_">User</span>,</span><br><span class="line">    <span class="attr">children</span>: [</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="comment">// 当 /user/:id/profile 匹配成功</span></span><br><span class="line">        <span class="comment">// UserProfile 将被渲染到 User 的 &lt;router-view&gt; 内部</span></span><br><span class="line">        <span class="attr">path</span>: <span class="string">&#x27;profile&#x27;</span>,</span><br><span class="line">        <span class="attr">component</span>: <span class="title class_">UserProfile</span></span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="comment">// 当 /user/:id/posts 匹配成功</span></span><br><span class="line">        <span class="comment">// UserPosts 将被渲染到 User 的 &lt;router-view&gt; 内部</span></span><br><span class="line">        <span class="attr">path</span>: <span class="string">&#x27;posts&#x27;</span>,</span><br><span class="line">        <span class="attr">component</span>: <span class="title class_">UserPosts</span></span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="comment">// 导航 /user/:id</span></span><br><span class="line">        <span class="attr">path</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">        <span class="attr">component</span>: <span class="title class_">Empty</span></span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<h3 id="命名路由"><a href="#命名路由" class="headerlink" title="命名路由"></a>命名路由</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">router.<span class="title function_">push</span>(&#123; <span class="attr">name</span>: <span class="string">&#x27;user&#x27;</span>, <span class="attr">query</span>: &#123; <span class="attr">username</span>: <span class="string">&#x27;eduardo&#x27;</span> &#125; &#125;)</span><br><span class="line"></span><br><span class="line">&lt;router-link :to=<span class="string">&quot;&#123; name: &#x27;profile&#x27;, params: &#123; username: &#x27;eraina&#x27; &#125; &#125;&quot;</span></span><br><span class="line">  <span class="title class_">User</span> profile</span><br><span class="line">&lt;/router-link&gt;</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>path</th>
+<th>name</th>
+<th>params</th>
+<th>query</th>
+<th>hash</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>路径</td>
+<td>命名</td>
+<td>参数</td>
+<td>查询参数</td>
+<td></td>
+</tr>
+<tr>
+<td>path: <code>&#39;/users/eduardo&#39;</code></td>
+<td>name: <code>&#39;user&#39;</code></td>
+<td>params: <code>&#123; username: &#39;eduardo&#39; &#125;</code></td>
+<td>query: <code>&#123; username: &#39;eduardo&#39; &#125;</code></td>
+<td>hash: <code>&#39;#team&#39;</code></td>
+</tr>
+</tbody></table>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> username = <span class="string">&#x27;eduardo&#x27;</span></span><br><span class="line">router.<span class="title function_">push</span>(<span class="string">`/user/<span class="subst">$&#123;username&#125;</span>`</span>)</span><br><span class="line">router.<span class="title function_">push</span>(&#123; <span class="attr">name</span>: <span class="string">&#x27;user&#x27;</span>, <span class="attr">params</span>: &#123; username &#125; &#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="一些方法"><a href="#一些方法" class="headerlink" title="一些方法"></a>一些方法</h3><p><strong>替换当前位置</strong>：<br><br>使用 <code>router.replace</code> 相比 <code>router.push</code> 导航时不会向 history 添加新记录</p>
+<p><strong>横跨历史</strong>：<br></p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">router.<span class="title function_">go</span>(<span class="number">1</span>)</span><br><span class="line">router.<span class="title function_">forward</span>()</span><br><span class="line"></span><br><span class="line">router.<span class="title function_">go</span>(-<span class="number">1</span>)</span><br><span class="line">router.<span class="title function_">back</span>()</span><br></pre></td></tr></table></figure>
+
+<h3 id="命名视图"><a href="#命名视图" class="headerlink" title="命名视图"></a>命名视图</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&lt;router-view name=<span class="string">&quot;NavBar&quot;</span> /&gt;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">router-view</span> <span class="attr">name</span>=<span class="string">&quot;LeftSiderBar&quot;</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">router-view</span> /&gt;</span></span> &lt;!-- 默认 <span class="keyword">default</span> --&gt;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> routes = [</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">path</span>: <span class="string">&#x27;/&#x27;</span>,</span><br><span class="line">    <span class="attr">components</span>: <span class="comment">// 不是 component</span></span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">default</span>: <span class="title class_">Home</span>,</span><br><span class="line">      <span class="title class_">LeftSiderBar</span>,</span><br><span class="line">      <span class="title class_">NavBar</span>: bar,</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<h3 id="将-props-传递给路由组件"><a href="#将-props-传递给路由组件" class="headerlink" title="将 props 传递给路由组件"></a>将 props 传递给路由组件</h3><figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line">&lt;script setup lang=<span class="string">&quot;ts&quot;</span>&gt;</span><br><span class="line">defineProps&lt;&#123;</span><br><span class="line">  <span class="attr">id</span>: <span class="built_in">number</span></span><br><span class="line">&#125;&gt;()</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;<span class="name">div</span>&gt;</span>&#123;&#123; id &#125;&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> routes = [</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">path</span>: <span class="string">&#x27;user/:id&#x27;</span>,</span><br><span class="line">    <span class="attr">component</span>: <span class="title class_">User</span>,</span><br><span class="line">    <span class="attr">props</span>: <span class="literal">true</span></span><br><span class="line">  &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<h3 id="全局前置守卫"><a href="#全局前置守卫" class="headerlink" title="全局前置守卫"></a>全局前置守卫</h3><figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line">router.<span class="title function_">beforeEach</span>(<span class="title function_">async</span> (to, <span class="keyword">from</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">if</span> (</span><br><span class="line">    !isAuthenticated &amp;&amp;</span><br><span class="line">    to.<span class="property">name</span> !== <span class="string">&#x27;Login&#x27;</span></span><br><span class="line">  ) &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123; <span class="attr">name</span>: <span class="string">&#x27;Login&#x27;</span> &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>守卫方法接收两个参数：</p>
+<ul>
+<li><code>to</code>： 即将要进入的目标</li>
+<li><code>from</code>：当前导航正要离开的路由<br>可以返回的值如下：</li>
+<li><code>false</code> 取消当前导航</li>
+<li>一个路由地址。如同调用 <code>router.push()</code>，可以传入诸如 <code>replace: true</code> 或 <code>name: &#39;home&#39;</code> 之类的选项</li>
+</ul>
+<h4 id="改变页面title"><a href="#改变页面title" class="headerlink" title="改变页面title"></a>改变页面title</h4><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> routes = [</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">path</span>: <span class="string">&#x27;/login&#x27;</span>,</span><br><span class="line">    <span class="attr">component</span>: <span class="title class_">Login</span>,</span><br><span class="line">    <span class="attr">meta</span>: &#123;</span><br><span class="line">      <span class="attr">title</span>: <span class="string">&#x27;登录页 &#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">router.<span class="title function_">beforeEach</span>(<span class="function"><span class="params">to</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (to.<span class="property">meta</span>.<span class="property">title</span>) &#123;</span><br><span class="line">    <span class="comment">// @ts-ignore</span></span><br><span class="line">    <span class="variable language_">document</span>.<span class="property">title</span> = to.<span class="property">meta</span>.<span class="property">title</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="路由懒加载"><a href="#路由懒加载" class="headerlink" title="路由懒加载"></a>路由懒加载</h3><p>当打包构建应用时，JavaScript 包会变得非常大，影响页面加载。如果我们能把不同路由对应的组件分割成不同的代码块，然后当路由被访问的时候才加载对应组件，这样就会更加高效。</p>
+<p>Vue Router 支持开箱即用的动态导入</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">UserDetails</span> = (<span class="params"></span>) =&gt; <span class="keyword">import</span>(<span class="string">&#x27;./views/UserDetails.vue&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> router = <span class="title function_">createRouter</span>(&#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  <span class="attr">routes</span>: [</span><br><span class="line">    &#123; <span class="attr">path</span>: <span class="string">&#x27;/users/:id&#x27;</span>, <span class="attr">component</span>: <span class="title class_">UserDetails</span> &#125;</span><br><span class="line">    <span class="comment">// 或在路由定义里直接使用它</span></span><br><span class="line">    &#123; <span class="attr">path</span>: <span class="string">&#x27;/users/:id&#x27;</span>, <span class="attr">component</span>: <span class="function">() =&gt;</span> <span class="keyword">import</span>(<span class="string">&#x27;./views/UserDetails.vue&#x27;</span>) &#125;,</span><br><span class="line">  ],</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+        </article>
+        <section class="post-near">
+            <ul>
+                
+                    <li>上一篇: 看完啦 (つд⊂)</li>
+                
+                
+                    <li>下一篇: <a href="/2025/03/05/React%20%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">React 基础知识</a></li>
+                
+            </ul>
+        </section>
+        
+            <section class="post-tags">
+            <a class="-none-link" href="/tags/vue/" rel="tag">vue</a>
+            </section>
+        
+    
+        <section class="post-author">
+        
+            <figure class="author-avatar">
+                <img src="https://avatars.githubusercontent.com/u/147379182?v=4" alt="Katrox" />
+            </figure>
+        
+            <div class="author-info">
+                <h4>Katrox</h4>
+                <p>Exception in thread "main" java.lang.NullPointerException</p>
+            </div>
+        </section>
+    
+    </div>
+</main>
+
+    <footer>
+    <div class="buttons">
+        <a class="to-top" href="#"></a>
+    </div>
+    <div class="wrap min">
+        <section class="widget">
+            <div class="row">
+                <div class="col-m-4">
+                    <h3 class="title-recent">最新文章：</h3>
+                    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2025/03/05/Vue%20%E8%BF%9B%E9%98%B6%E7%9F%A5%E8%AF%86%E7%82%B9/">Vue 进阶知识点</a></li><li class="post-list-item"><a class="post-list-link" href="/2025/03/05/React%20%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">React 基础知识</a></li><li class="post-list-item"><a class="post-list-link" href="/2025/03/05/%E5%B8%B8%E8%A7%81%E7%9A%84%E4%B8%89%E5%A4%A7%E8%AF%B7%E6%B1%82API/">常见的三大请求API</a></li><li class="post-list-item"><a class="post-list-link" href="/2024/07/16/React%20+%20Electron%20%E9%85%8D%E7%BD%AE%E6%95%99%E5%AD%A6/">React + Electron 环境配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2024/07/12/React%20%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/">React 项目搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2024/06/28/Vue%20%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/">Vue 项目搭建</a></li></ul>
+                </div>
+                <div class="col-m-4">
+                    <h3 class="title-date">时光机：</h3>
+                    <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/03/">March 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/07/">July 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/06/">June 2024</a></li></ul>
+                </div>
+                <div class="col-m-4">
+                    <h3 class="title-tags">标签云：</h3>
+                    <a href="/tags/electron/" style="font-size: 10px;">electron</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/react/" style="font-size: 20px;">react</a> <a href="/tags/vue/" style="font-size: 15px;">vue</a>
+                </div>
+            </div>
+        </section>
+        <section class="sub-footer">
+            <p>© 2025 <a href="/">Katrox&#39; Blog</a>. All Rights Reserved. Theme By <a href="https://github.com/Dreamer-Paul/Hingle" target="_blank" rel="nofollow">Hingle</a>.</p>
+        </section>
+    </div>
+</footer>
+
+
+<script src="/static/kico.js"></script>
+<script src="/static/hingle.js"></script>
+
+
+<script>var hingle = new Paul_Hingle({"copyright":true,"night":true});</script>
+
+  </body>
+</html>

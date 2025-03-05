@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+  <head>
+     
+    <meta charset="UTF-8">
+    <title>常见的三大请求API - Katrox&#39; Blog</title>
+    <link rel="shortcut icon" href="/static/img/icon.png">
+    <link rel="icon" href="/static/img/icon.png" sizes="192x192"/>
+    
+<link rel="stylesheet" href="/static/kico.css">
+<link rel="stylesheet" href="/static/hingle.css">
+
+    
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <meta name="viewport" content="width=device-width, maximum-scale=1, initial-scale=1"/>
+    <meta property="og:site_name" content="Katrox&#39; Blog">
+    <meta property="og:title" content="常见的三大请求API"/>
+    
+    <style>body:before{ content: ''; background-image: url(https://api.paugram.com/wallpaper?source=gh) }</style>
+    
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+  <body>
+    <header>
+    <div class="head-title">
+        <h4>Katrox&#39; Blog</h4>
+    </div>
+    <div class="head-action">
+        <div class="toggle-btn"></div>
+        <div class="light-btn"></div>
+        <div class="search-btn"></div>
+    </div>
+    <form class="head-search" method="post">
+        <input type="text" name="s" placeholder="搜索什么？">
+    </form>
+    <nav class="head-menu">
+        <a href="/">首页</a>
+        <div class="has-child">
+            <a>分类</a>
+            <div class="sub-menu">
+                <a class="category-link" href="/categories/%E8%84%9A%E6%89%8B%E6%9E%B6%E6%90%AD%E5%BB%BA/">脚手架搭建</a>
+            </div>
+        </div>
+        
+            <a href="/about">关于我</a>
+        
+    </nav>
+</header>
+
+    <main>
+    <div class="wrap min">
+        <section class="post-title">
+            <h2>常见的三大请求API</h2>
+            <div class="post-meta">
+                <time class="date">2025.03.05</time>
+            
+            </div>
+        </section>
+        <article class="post-content">
+        
+            <h2 id="Xhr"><a href="#Xhr" class="headerlink" title="Xhr"></a>Xhr</h2><p>创建实例 <code>let xhr = new XMLHttpRequest()</code></p>
+<p>打开请求 <code>xhr.open([http method], [url], [isAsync])</code></p>
+<p>发送请求 <code>xhr.send()</code></p>
+<p>事件监听 readystatechange 状态码发生改变</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> xhr = <span class="keyword">new</span> <span class="title class_">XMLHttpRequest</span>()</span><br><span class="line"></span><br><span class="line">xhr.<span class="title function_">open</span>(<span class="string">&#x27;GET&#x27;</span>, <span class="string">&#x27;/ajax/get&#x27;</span> + <span class="string">&#x27;?testData=ajax&#x27;</span>)</span><br><span class="line">xhr.<span class="title function_">send</span>()</span><br><span class="line"></span><br><span class="line">xhr.<span class="title function_">open</span>(<span class="string">&#x27;POST&#x27;</span>, <span class="string">&#x27;/ajax/post&#x27;</span>)</span><br><span class="line">xhr.<span class="title function_">setRequestHeader</span>(<span class="string">&#x27;Content-Type&#x27;</span>, <span class="string">&#x27;application/json&#x27;</span>)</span><br><span class="line">xhr.<span class="title function_">send</span>(<span class="title class_">JSON</span>.<span class="title function_">stringify</span>(&#123; <span class="attr">testData</span>: <span class="string">&#x27;nihao&#x27;</span> &#125;))</span><br><span class="line"></span><br><span class="line">xhr.<span class="property">onreadystatechange</span> = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="comment">// 通过判断 xhr 的 readyState，确定请求是否完成</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">readyState</span> === <span class="number">4</span> &amp;&amp; xhr.<span class="property">status</span> === <span class="number">200</span>) &#123;</span><br><span class="line">        <span class="comment">// 处理程序</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="readyState-属性"><a href="#readyState-属性" class="headerlink" title="readyState 属性"></a>readyState 属性</h3><p><strong>0：</strong> 刚创建实例<br><br><strong>1：</strong> 已调用 <code>send</code><br><br><strong>2：</strong> 接收到全部响应内容<br><br><strong>3：</strong> 正在解析响应内容<br><br><strong>4：</strong> 响应内容解析完成</p>
+<h2 id="Axios（第三方）"><a href="#Axios（第三方）" class="headerlink" title="Axios（第三方）"></a>Axios（第三方）</h2><p>axios 是使用 promise 对 xhr 的一层封装。</p>
+<ol>
+<li><code>axios.get/delete(url, [config])</code></li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">axios.<span class="title function_">get</span>(<span class="string">&#x27;/users&#x27;</span>, &#123;</span><br><span class="line">    <span class="attr">params</span>: &#123;</span><br><span class="line">        <span class="attr">id</span>: <span class="number">1</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;).<span class="property">then</span>...</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><code>axios.post/put/patch(url, [data], [config])</code></li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">axios.<span class="title function_">post</span>(<span class="string">&#x27;/users&#x27;</span>, &#123;</span><br><span class="line">    <span class="attr">id</span>: <span class="number">1</span>,</span><br><span class="line">    <span class="attr">username</span>: <span class="string">&#x27;你好&#x27;</span>,</span><br><span class="line">&#125;).<span class="property">then</span>...</span><br></pre></td></tr></table></figure>
+
+<h2 id="Fetch（ES8-api）"><a href="#Fetch（ES8-api）" class="headerlink" title="Fetch（ES8 api）"></a>Fetch（ES8 api）</h2><p>请求返回4xx 5xx 状态码时不会reject，只有<strong>网络出错</strong>导致请求不能完成时reject</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="title function_">fetch</span>(<span class="string">&#x27;/users&#x27;</span>, &#123;</span><br><span class="line">    <span class="attr">method</span>: <span class="string">&#x27;PATCH&#x27;</span>,</span><br><span class="line">    <span class="attr">body</span>: <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(&#123;</span><br><span class="line">        <span class="attr">id</span>: <span class="number">12</span>,</span><br><span class="line">        <span class="attr">name</span>: <span class="string">&#x27;你好&#x27;</span>,</span><br><span class="line">    &#125;),</span><br><span class="line">    <span class="attr">headers</span>:  &#123;</span><br><span class="line">        <span class="string">&#x27;Content-type&#x27;</span>: <span class="string">&#x27;application/json&#x27;</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;).<span class="property">then</span>...</span><br><span class="line"></span><br><span class="line"><span class="title function_">fetch</span>(<span class="string">&#x27;/users&#x27;</span> + <span class="string">&#x27;?id=12&amp;name=你好&#x27;</span>, &#123;</span><br><span class="line">    <span class="attr">method</span>: <span class="string">&#x27;GET&#x27;</span>,</span><br><span class="line">&#125;).<span class="property">then</span>...</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>Content-type</th>
+<th>数据</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>text&#x2F;plain</td>
+<td>纯文本数据</td>
+</tr>
+<tr>
+<td>application&#x2F;x-www-form-urlencoded</td>
+<td>键值对</td>
+</tr>
+<tr>
+<td>multipart&#x2F;form-data</td>
+<td>二进制流（传输文件）</td>
+</tr>
+<tr>
+<td>application&#x2F;json</td>
+<td>JSON</td>
+</tr>
+</tbody></table>
+<h2 id="RESTful-API-的-URL-设计规范"><a href="#RESTful-API-的-URL-设计规范" class="headerlink" title="RESTful API 的 URL 设计规范"></a>RESTful API 的 URL 设计规范</h2><ul>
+<li>所有单词使用英文小写，用复数表示</li>
+<li>连字符用中划线 ‘-‘，URL结尾不带有 ‘&#x2F;‘</li>
+<li>URL即资源，其中不应出现动词，用请求方式表示动作</li>
+</ul>
+<h3 id="HTTP-Method"><a href="#HTTP-Method" class="headerlink" title="HTTP Method"></a>HTTP Method</h3><blockquote>
+<p><strong>GET</strong> 请求用来获取资源</p>
+<p><strong>POST</strong> 请求用来新增资源</p>
+<p><strong>PUT</strong> <strong>PATCH</strong> 请求用来更新资源</p>
+<blockquote>
+<p>patch 相对于 put 是局部更新一个资源。<br><br>比如修改一个用户的昵称：<br>put 会传递整个 <code>userInfo</code> 对象，<br>而 patch 只传部分字段 <code>nickname</code></p>
+</blockquote>
+<p><strong>DELETE</strong> 请求用来删除资源</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">GET /books：获取所有书</span><br><span class="line">GET /books/1：获取主键为1的书</span><br><span class="line">POST /books：新增一本书</span><br><span class="line">PUT /books/1：整体修改主键为1的书</span><br><span class="line">PATCH /books/1：局部修改主键为1的书</span><br><span class="line">DELETE /books/1：删除主键为1的书</span><br></pre></td></tr></table></figure>
+
+<h3 id="HTTP请求的安全性和幂等性"><a href="#HTTP请求的安全性和幂等性" class="headerlink" title="HTTP请求的安全性和幂等性"></a>HTTP请求的安全性和幂等性</h3><p><strong>幂等：</strong> 在计算机范畴内表示一个操作执行任意次对系统的影响跟一次是相同</p>
+<p><img src="https://pic1.zhimg.com/80/v2-3d59c2beffb51d40d7c05fcf83ed372c_1440w.webp" alt="4种HTTP请求"></p>
+
+        </article>
+        <section class="post-near">
+            <ul>
+                
+                    <li>上一篇: <a href="/2025/03/05/React%20%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">React 基础知识</a></li>
+                
+                
+                    <li>下一篇: <a href="/2024/07/16/React%20+%20Electron%20%E9%85%8D%E7%BD%AE%E6%95%99%E5%AD%A6/">React + Electron 环境配置</a></li>
+                
+            </ul>
+        </section>
+        
+            <section class="post-tags">
+            <a class="-none-link" href="/tags/http/" rel="tag">http</a>
+            </section>
+        
+    
+        <section class="post-author">
+        
+            <figure class="author-avatar">
+                <img src="https://avatars.githubusercontent.com/u/147379182?v=4" alt="Katrox" />
+            </figure>
+        
+            <div class="author-info">
+                <h4>Katrox</h4>
+                <p>Exception in thread "main" java.lang.NullPointerException</p>
+            </div>
+        </section>
+    
+    </div>
+</main>
+
+    <footer>
+    <div class="buttons">
+        <a class="to-top" href="#"></a>
+    </div>
+    <div class="wrap min">
+        <section class="widget">
+            <div class="row">
+                <div class="col-m-4">
+                    <h3 class="title-recent">最新文章：</h3>
+                    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2025/03/05/Vue%20%E8%BF%9B%E9%98%B6%E7%9F%A5%E8%AF%86%E7%82%B9/">Vue 进阶知识点</a></li><li class="post-list-item"><a class="post-list-link" href="/2025/03/05/React%20%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">React 基础知识</a></li><li class="post-list-item"><a class="post-list-link" href="/2025/03/05/%E5%B8%B8%E8%A7%81%E7%9A%84%E4%B8%89%E5%A4%A7%E8%AF%B7%E6%B1%82API/">常见的三大请求API</a></li><li class="post-list-item"><a class="post-list-link" href="/2024/07/16/React%20+%20Electron%20%E9%85%8D%E7%BD%AE%E6%95%99%E5%AD%A6/">React + Electron 环境配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2024/07/12/React%20%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/">React 项目搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2024/06/28/Vue%20%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/">Vue 项目搭建</a></li></ul>
+                </div>
+                <div class="col-m-4">
+                    <h3 class="title-date">时光机：</h3>
+                    <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/03/">March 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/07/">July 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/06/">June 2024</a></li></ul>
+                </div>
+                <div class="col-m-4">
+                    <h3 class="title-tags">标签云：</h3>
+                    <a href="/tags/electron/" style="font-size: 10px;">electron</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/react/" style="font-size: 20px;">react</a> <a href="/tags/vue/" style="font-size: 15px;">vue</a>
+                </div>
+            </div>
+        </section>
+        <section class="sub-footer">
+            <p>© 2025 <a href="/">Katrox&#39; Blog</a>. All Rights Reserved. Theme By <a href="https://github.com/Dreamer-Paul/Hingle" target="_blank" rel="nofollow">Hingle</a>.</p>
+        </section>
+    </div>
+</footer>
+
+
+<script src="/static/kico.js"></script>
+<script src="/static/hingle.js"></script>
+
+
+<script>var hingle = new Paul_Hingle({"copyright":true,"night":true});</script>
+
+  </body>
+</html>
